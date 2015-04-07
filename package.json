@@ -1,0 +1,22 @@
+{
+  "name": "unroll_crontab",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "vzvu3k6k",
+  "license": "CC0",
+  "private": true,
+  "dependencies": {
+    "cron-parser": "^0.6.1"
+  },
+  "devDependencies": {
+    "browserify": "^9.0.7",
+    "gulp": "^3.8.11",
+    "react": "^0.13.1",
+    "reactify": "^1.1.0",
+    "vinyl-source-stream": "^1.1.0"
+  }
+}
