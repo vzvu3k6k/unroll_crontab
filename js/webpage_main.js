@@ -21,6 +21,24 @@ var Task = React.createClass({
   },
 });
 
+var UnrollCrontabConfig = React.createClass({
+  onClickNow: function(e) {
+    this.props.updateStartDate(new Date());
+  },
+  onChange: function(e) {
+    var date = new Date();
+    date.setTime(Date.parse(e.value));
+    this.props.updateStartDate(date);
+  },
+  render: function() {
+    return <form className="unrollCrontabConfig">
+      <label htmlFor="unrollCrontabConfig-date">Start</label>
+      <input type="text" name="start" id="unrollCrontabConfig-date" value={this.props.startDate.toISOString()} onChange={this.onChange} />
+      <input type="button" onClick={this.onClickNow} value="Set Now" />
+      </form>;
+  }
+});
+
 var UnrollCrontab = React.createClass({
   update: function() {
     var crontabStr = this.refs.crontab.getDOMNode().value;
@@ -36,7 +54,10 @@ var UnrollCrontab = React.createClass({
     this.setState({tasks: unrollCrontab(expressions)});
   },
   getInitialState: function() {
-    return {tasks: (function*(){})()};
+    return {tasks: (function*(){})(), startDate: new Date()};
+  },
+  updateStartDate: function(date) {
+    this.setState({startDate: date});
   },
   render: function() {
     var taskNodes = [];
@@ -55,6 +76,7 @@ var UnrollCrontab = React.createClass({
     }
     return <div className="unrollCrontab">
       <textarea className="crontab" ref="crontab" onChange={this.update} placeholder="Paste your `crontab -l`"></textarea>
+      <UnrollCrontabConfig updateStartDate={this.updateStartDate} startDate={this.state.startDate} />
       <ol className="unrolledTasks">
         {taskNodes}
       </ol>
