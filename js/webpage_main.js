@@ -23,17 +23,28 @@ var Task = React.createClass({
 
 var UnrollCrontabConfig = React.createClass({
   onClickNow: function(e) {
+    this.setState({startValueOnEdit: null});
     this.props.updateStartDate(new Date());
   },
   onChange: function(e) {
+    var newValue = React.findDOMNode(this.refs.start).value;
+    var newDateEpochMs = Date.parse(newValue);
+    if (Number.isNaN(newDateEpochMs)) {
+      this.setState({startValueOnEdit: newValue});
+      return;
+    }
+    this.setState({startValueOnEdit: null});
     var date = new Date();
-    date.setTime(Date.parse(e.value));
+    date.setTime(newDateEpochMs);
     this.props.updateStartDate(date);
+  },
+  getInitialState: function(){
+    return {startValueOnEdit: null};
   },
   render: function() {
     return <form className="unrollCrontabConfig">
       <label htmlFor="unrollCrontabConfig-date">Start</label>
-      <input type="text" name="start" id="unrollCrontabConfig-date" value={this.props.startDate.toISOString()} onChange={this.onChange} />
+      <input type="text" name="start" id="unrollCrontabConfig-date" value={this.state.startValueOnEdit || this.props.startDate.toISOString()} ref="start" onChange={this.onChange} />
       <input type="button" onClick={this.onClickNow} value="Set Now" />
       </form>;
   }
