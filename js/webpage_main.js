@@ -69,6 +69,7 @@ var UnrollCrontab = React.createClass({
   },
   updateStartDate: function(date) {
     this.setState({startDate: date});
+    this.update(); // init this.state.tasks
   },
   render: function() {
     var taskNodes = [];
