@@ -50,7 +50,7 @@ var UnrollCrontabConfig = React.createClass({
   },
   startDateToString: function(date) {
     return `${date.getFullYear()}-${pad(date.getMonth())}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
-  }
+  },
 });
 
 var UnrollCrontab = React.createClass({
@@ -96,7 +96,7 @@ var UnrollCrontab = React.createClass({
         {taskNodes}
       </ol>
       </div>;
-  }
+  },
 });
 
 React.render(<UnrollCrontab />, document.querySelector('div'));
