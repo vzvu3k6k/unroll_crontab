@@ -2,13 +2,13 @@ var parse = require('./lib/parse');
 var unrollCrontab = require('./lib/unroll_crontab');
 var React = require('react');
 
+// %02d (1 -> 01, 10 -> 10)
+function pad(n) {
+  return n < 10 ? '0' + n : n;
+}
+
 var Task = React.createClass({
   render: function() {
-    // %02d (1 -> 01, 10 -> 10)
-    function pad(n) {
-      return n < 10 ? '0' + n : n;
-    }
-
     // Date -> YYYY-MM-DD hh:mm
     function date2str(date) {
       return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
@@ -44,9 +44,12 @@ var UnrollCrontabConfig = React.createClass({
   render: function() {
     return <form className="unrollCrontabConfig">
       <label htmlFor="unrollCrontabConfig-date">Start</label>
-      <input type="text" name="start" id="unrollCrontabConfig-date" value={this.state.startValueOnEdit || this.props.startDate.toISOString()} ref="start" onChange={this.onChange} />
-      <input type="button" onClick={this.onClickNow} value="Set Now" />
+      <input type="text" name="start" id="unrollCrontabConfig-date" value={this.state.startValueOnEdit || this.startDateToString(this.props.startDate)} ref="start" onChange={this.onChange} />
+      <input type="button" onClick={this.onClickNow} value="Now" />
       </form>;
+  },
+  startDateToString: function(date) {
+    return `${date.getFullYear()}-${pad(date.getMonth())}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
   }
 });
 
