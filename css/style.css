@@ -1,0 +1,8 @@
+textarea {
+    width: 95vw;
+    height: 10em;
+}
+
+.unrolledTasks li time, .unrolledTasks li code {
+    display: block;
+}
